@@ -72,6 +72,6 @@ mkdir -p ${outputdir_2}
 
 prefix=$( remove_extx $( basename ${t1} ) )
 
-cp ${outputdir_0}'/'${prefix}"_reoriented.nii.gz"	${outputdir_1}
-cp ${outputdir_0}'/'${prefix}"_reoriented_N4.nii.gz"	${outputdir_2}
+cp ${outputdir_0}'/'${prefix}"_reoriented.nii.gz"	${outputdir_1}'/t1.nii.gz'
+cp ${outputdir_0}'/'${prefix}"_reoriented_N4.nii.gz"	${outputdir_2}'/t1.nii.gz'
 
