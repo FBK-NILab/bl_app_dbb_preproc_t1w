@@ -57,7 +57,7 @@ else
 
 fi
 
-if ( [ -z "${mask}" ]  || [  "${affine}" == "null" ] ); then
+if ( [ -z "${mask}" ]  || [  "${mask}" == "null" ] ); then
 
 	echo "No brain mask provided for bias field correction.."
 
