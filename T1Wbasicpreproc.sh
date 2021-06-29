@@ -211,16 +211,13 @@ fi
 
 basena=$( remove_extx $( basename $input_ ) )
 
-if ( [ -z ${affine} ] || [  "${affine}" == "null" ] ); then
+if [ -z ${affine} ]; then
 
 	affine=${outputdir}/${basena}_2MNI_Affine.txt
 fi
 
-if ( [ -z "${T1_mask}" ] || [  "${T1_mask}" == "null" ] ); then
+if [ -n "${T1_mask}" ] ; then
 
-	echo "No mask provided for N4 Bias Field Correction..."
-
-else
 
 	mask_opt=" -x ${T1_mask} "
 fi
