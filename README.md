@@ -29,7 +29,7 @@ There are two mandatory inputs:
    
 and some optional inputs:
 
-	-o, --outputdir     if not provided, the scripts creates the folder *T1w_preproc* in the same folder 
+	-o, --outputdir     if not provided, the scripts creates the folder "T1w_preproc" in the same folder 
 	                    as the input image
 	-a, --affine        fullpath of affine matrix to perform rigid transformation to the template
 	-m, --mask          full path of the brain mask to limit Bias-field correction on these voxels     
@@ -48,8 +48,8 @@ This App runs on singularity.
 The outputs of bl_app_dbb_preprocessing_t1w are:
      
      - a T1-w rigidly reoriented to template space.
-         The file has the same *basename* of the input T1-w file with the suffix *_reoriented*
+         The file has the same *basename* of the input T1-w file with the suffix "_reoriented"
      - a T1-w rigidly reoriented to template space and with Bias Field Corrected. 
-         The file has the same *basename* of the input T1-w file with the suffix *_reoriented_N4*
+         The file has the same *basename* of the input T1-w file with the suffix "_reoriented_N4"
 
 
