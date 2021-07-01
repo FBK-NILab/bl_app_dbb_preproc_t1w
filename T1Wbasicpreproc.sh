@@ -88,6 +88,60 @@ remove_extx () {
 		
 }
 
+imm_dim() {	
+
+                 	
+		sizem=$(PrintHeader $1 2)
+		dimm=$( grep -o "x" <<<"$sizem" | wc -l)
+		dimm=$(( $dimm+1 ))
+		echo $dimm
+		
+		};
+		
+
+imm_size() { 
+
+                
+                local stringsize=$(PrintHeader $1 2)
+				local sep="$2"
+				[ -z $sep ] && { sep=',';}
+				[ $sep == 'space' ] && { sep=' ';}
+				local commasize=${stringsize//'x'/$sep}
+				echo ${commasize}
+
+		};
+
+imm_mean() {     
+
+                
+				local subs=$1;
+				local dim=$( imm_dim $1 )
+				local stasts=( $(ImageIntensityStatistics ${dim} ${1} ) )
+				echo ${stasts[12]}
+		};
+
+
+imm_setAverage () {
+
+		if [ $# -lt 2 ]; then							# usage of the function							
+		    echo $0: usage: "imm_setAverage <imm_input.ext> <imm_output.ext> [<value>]"		
+		    return 1
+		fi
+
+		local input_=$1
+		local output_=$2
+		local MEAN_INTENSITY=$3
+		local dim=$( imm_dim $1 )
+		[ -z ${MEAN_INTENSITY} ] && { MEAN_INTENSITY=100; }
+		
+		AVERAGE=$( imm_mean ${input_} )
+		
+		ImageMath ${dim}  ${output_} /  ${input_}  ${AVERAGE}
+		ImageMath ${dim}  ${output_} m ${output_}  ${MEAN_INTENSITY}
+
+ }	
+
+
 ###################################################################################################################
 ######### 	Input Parsing
 ###################################################################################################################
@@ -262,7 +316,9 @@ fi
 		
 input_N4=${outputdir}'/'$( remove_extx $input_reo	)"_N4.nii.gz"
 if [ $( exists $input_N4 ) -eq 0 ]; then
-
+	
+	imm_setAverage ${input_reo} ${input_reo}
+	
 	N4BiasFieldCorrection 	-d ${dim} \
 							-i $input_reo \
 							-o $input_N4 \
