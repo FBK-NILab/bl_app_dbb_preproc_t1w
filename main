@@ -45,7 +45,7 @@ remove_extx () {
 #parse config.json for input parameters 
 
 t1=$(jq -r .t1 config.json)
-affine=$(jq -r .affine config.json)
+affine=$(jq -r .output config.json)
 mask=$(jq -r .mask config.json)
 
 echo "t1: "${t1}
