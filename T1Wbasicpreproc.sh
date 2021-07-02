@@ -120,7 +120,14 @@ imm_mean() {
 				echo ${stasts[12]}
 		};
 
+imm_max() {     
 
+		local subs=$1;
+		local dim=$( imm_dim $1 )
+		local stasts=( $(ImageIntensityStatistics ${dim} ${1} ) )
+		echo ${stasts[21]}
+		};
+		
 imm_setAverage () {
 
 		if [ $# -lt 2 ]; then							# usage of the function							
@@ -141,6 +148,17 @@ imm_setAverage () {
 
  }	
 
+
+imm_thr () {
+		
+		local t1=$1
+		local t1_out=$2
+		local dim=$( imm_dim $1 )
+		local max=$( imm_max $t1 )
+		local t1_thr=$( dirname $t1 )'/'$( remove_extx $t1 )'_thrmask.nii.gz'
+		ThresholdImage ${dim} ${t1} ${t1_thr} 0 ${max} 
+		ImageMath ${t1_out} m ${t1} ${t1_thr}
+}
 
 ###################################################################################################################
 ######### 	Input Parsing
@@ -267,14 +285,9 @@ basena=$( remove_extx $( basename $input_ ) )
 
 if [ -z ${affine} ]; then
 
-	affine=${outputdir}/${basena}_2MNI_Affine.txt
+	affine=${outputdir}/${basena}_2MNI_0GenericAffine.mat
 fi
 
-if [ -n "${T1_mask}" ] ; then
-
-
-	mask_opt=" -x ${T1_mask} "
-fi
 
 
 [ -d ${outputdir} ] || { mkdir ${outputdir} ; }
@@ -282,18 +295,32 @@ fi
 
 input_reo=${outputdir}'/'$( remove_extx $input_	)"_reoriented.nii.gz"
 
+dim=$( imm_dim ${input_} )
+
 if [ $( exists $input_reo ) -eq 0 ]; then
 
 	if [ $( exists ${affine} ) -eq 0 ]; then
 
 		iter=10000x1000x1000
 
-		ANTS			3 -m CC[${template},${input_},1,4] \
-						-o ${outputdir}/${basena}_2MNI_ \
-						-i 0 -v  \
-						-r Gauss[3,0.5] \
-						--number-of-affine-iterations ${iter} \
-						--do-rigid
+	
+						
+		its=10000x111110x11110
+		percentage=0.3				
+		${ANTSPATH}/antsRegistration -d ${dim} -v 1 -r [ ${template} , ${input_}  ,1]  \
+                        -m mattes[  ${template} , ${input_}  , 1 , 32, regular, $percentage ] \
+                         -t translation[ 0.1 ] \
+                         -c [$its,1.e-8,20]  \
+                        -s 4x2x1vox  \
+                        -f 6x4x2 -l 1 \
+                        -m mattes[  ${template} , ${input_}  , 1 , 32, regular, $percentage ] \
+                         -t rigid[ 0.1 ] \
+                         -c [$its,1.e-8,20]  \
+                        -s 4x2x1vox  \
+                        -f 3x2x1 -l 1 \
+                       -o ${outputdir}/${basena}_2MNI_ 
+						
+						
 	fi
 
 	if [ $( exists $input_reo ) -eq 0 ]; then
@@ -313,6 +340,27 @@ fi
 ###################################################################################################################
 
 
+if [ -n "${T1_mask}" ] ; then
+
+
+
+	T1_mask_reo=${outputdir}'/'$( remove_extx ${T1_mask} )'_reoriented.nii.gz'
+	
+	antsApplyTransforms \
+					-d ${dim} \
+					-i ${T1_mask} \
+					-o ${T1_mask_reo} \
+					-r ${template} \
+					-t ${affine} \
+					-n 'Linear'
+	
+	ThresholdImage ${dim} ${T1_mask_reo} ${T1_mask_reo} 0.5 $( imm_max ${T1_mask_reo} )				
+	mask_opt=" -x ${T1_mask_reo} "
+
+
+
+fi
+
 		
 input_N4=${outputdir}'/'$( remove_extx $input_reo	)"_N4.nii.gz"
 if [ $( exists $input_N4 ) -eq 0 ]; then
@@ -320,7 +368,9 @@ if [ $( exists $input_N4 ) -eq 0 ]; then
 	imm_setAverage ${input_reo} ${input_reo}
 	
 	N4BiasFieldCorrection 	-d ${dim} \
-							-i $input_reo \
-							-o $input_N4 \
+							-i ${input_reo} \
+							-o ${input_N4} \
 							-v ${mask_opt} ; 
+	
+	imm_thr ${input_N4}  ${input_N4}
 fi
