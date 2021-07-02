@@ -307,7 +307,7 @@ if [ $( exists $input_reo ) -eq 0 ]; then
 						
 		its=10000x111110x11110
 		percentage=0.3				
-		${ANTSPATH}/antsRegistration -d ${dim} -v 1 -r [ ${template} , ${input_}  ,1]  \
+		antsRegistration -d ${dim} -v 1 -r [ ${template} , ${input_}  ,1]  \
                         -m mattes[  ${template} , ${input_}  , 1 , 32, regular, $percentage ] \
                          -t translation[ 0.1 ] \
                          -c [$its,1.e-8,20]  \
