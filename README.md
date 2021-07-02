@@ -43,6 +43,21 @@ You can see DBB_preprocessing_t1w currently regsitered on Brainlife. Find the Ap
 
 This App runs on singularity.
 
+### Running locally
+1. git clone this repository.
+2. Inside the cloned directory, create `config.json` with something like the following content with paths to your input files:
+```
+{   
+    "t1": "./t1.nii.gz",
+    "mask": "./mask.nii.gz"
+    "affine": "./affine.txt",
+}
+```
+3. Launch the App by executing `main`.
+```
+./main
+```
+
 ### Outputs
 
 The outputs of bl_app_dbb_preprocessing_t1w are:
