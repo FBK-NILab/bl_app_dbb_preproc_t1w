@@ -45,7 +45,7 @@ remove_extx () {
 #parse config.json for input parameters 
 
 t1=$(jq -r .t1 config.json)
-affine=$(jq -r .output config.json)
+affine=$(jq -r .affine config.json)
 mask=$(jq -r .mask config.json)
 
 echo "t1: "${t1}
@@ -57,8 +57,9 @@ if ( [ -z "${affine}" ]  || [  "${affine}" == "null" ] ); then
 	echo "No affine matrix provided. Reorientation to the  MNI152 space will be performed by rigid registration to MNI152 T1-w template..."
 	
 else
-	affine_mat="${affine}/affine.mat"
-	affine_opt=" --affine ${affine_mat} "
+	#affine_mat="${affine}/affine.txt"
+	#affine_opt=" --affine ${affine_mat} "
+	affine_opt=" --affine ${affine} "
 
 fi
 
