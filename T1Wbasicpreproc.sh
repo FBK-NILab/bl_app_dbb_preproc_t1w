@@ -153,11 +153,11 @@ imm_thr () {
 		
 		local t1=$1
 		local t1_out=$2
-		local dim=$( imm_dim $1 )
+		local dim=$( imm_dim $t1 )
 		local max=$( imm_max $t1 )
 		local t1_thr=$( dirname $t1 )'/'$( remove_extx $t1 )'_thrmask.nii.gz'
 		ThresholdImage ${dim} ${t1} ${t1_thr} 0 ${max} 
-		ImageMath ${t1_out} m ${t1} ${t1_thr}
+		ImageMath ${dim} ${t1_out} m ${t1} ${t1_thr}
 }
 
 ###################################################################################################################
@@ -324,6 +324,7 @@ if [ $( exists $input_reo ) -eq 0 ]; then
 	fi
 
 	if [ $( exists $input_reo ) -eq 0 ]; then
+		echo "apply transform..."
 		antsApplyTransforms \
 						-d ${dim} \
 						-i ${input_} \
@@ -343,7 +344,7 @@ fi
 if [ -n "${T1_mask}" ] ; then
 
 
-
+	echo "reorient mask..."
 	T1_mask_reo=${outputdir}'/'$( remove_extx ${T1_mask} )'_reoriented.nii.gz'
 	
 	antsApplyTransforms \
@@ -364,13 +365,15 @@ fi
 		
 input_N4=${outputdir}'/'$( remove_extx $input_reo	)"_N4.nii.gz"
 if [ $( exists $input_N4 ) -eq 0 ]; then
-	
+	echo "set average value to 100..."
 	imm_setAverage ${input_reo} ${input_reo}
 	
 	N4BiasFieldCorrection 	-d ${dim} \
 							-i ${input_reo} \
 							-o ${input_N4} \
 							-v ${mask_opt} ; 
-	
+	echo "threshould image..."
 	imm_thr ${input_N4}  ${input_N4}
+        imm_setAverage ${input_N4} ${input_N4}
+
 fi
