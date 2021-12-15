@@ -37,8 +37,7 @@ bl data query --subject 0001 --datatype neuro/mask --project <projectid>
 
 If not present yet, you can upload a new file in a project using ```bl data upload```. For example, in the case of T1-w file, for the subject 0001 you can run:
 ```
-bl data upload --project <project_id> --subject 0001 \
---datatype "neuro/anat/t1w" --t1 <full_path>
+bl data upload --project <project_id> --subject 0001 --datatype "neuro/anat/t1w" --t1 <full_path>
 
 ```
 ## Running the code locally
