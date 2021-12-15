@@ -14,8 +14,7 @@ This application performs a basic pre-processing of t1-w images:
 ## Running the Brainlife App
 
 
-You can run the BrainLife App `DBB_preprocessing_t1w` on the brainlife.io platform via the web user interface (UI) or using the `brainlife CLI`.  With both of these two solutions, the inputs and outputs are stored on the brainlife.io platform, under
-the specified project and the computations are performed using the brainlife.io cloud computing resources.
+You can run the BrainLife App `DBB_preprocessing_t1w` on the brainlife.io platform via the web user interface (UI) or using the `brainlife CLI`.  With both of these two solutions, the inputs and outputs are stored on the brainlife.io platform, under the specified project and the computations are performed using the brainlife.io cloud computing resources.
 
 
 ### On Brainlife.io via UI
