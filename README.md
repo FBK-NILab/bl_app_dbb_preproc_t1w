@@ -19,7 +19,7 @@ You can run the BrainLife App `DBB_preprocessing_t1w` on the brainlife.io platfo
 
 ### On Brainlife.io via UI
 
-You can see DBB_preprocessing_t1w currently regsitered on Brainlife. Find the App on _brainlife.io_ and click "Execute" tab and specify dataset e.g. "DBB Malformation Brain Benchmark".
+You can see DBB_preprocessing_t1w currently regsitered on Brainlife. Find the App on _brainlife.io_ and click "Execute" tab and specify dataset e.g. "DBB Distorted Brain Benchmark".
 
 ### On Brainlife.io using CLI
 
