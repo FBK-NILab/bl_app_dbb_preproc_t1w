@@ -27,7 +27,7 @@ Brainlife CLI could be installed on UNIX/Linux-based system following the instru
 
 you can run the App with CLI as follow:
 ```
-bl app run --id  60cb69e0cdfdb50220fee1c3--project <project_id> --input t1:<t1_object_id> \
+bl app run --id  60cb69e0cdfdb50220fee1c3 --project <project_id> --input t1:<t1_object_id> \
 --input mask:<mask_object_id> --input affine:<affine_object_id>
 ```
 the output is stored in the reference project specified with the id ```<project_id>```. You can retrieve the _object_id_ using the command ```bl data query```, e.g to get the id of the mask file for the subject _0001_ :
