@@ -52,7 +52,7 @@ Inside the cloned directory, create `config.json` with something like the follow
 ```
 {   
     "t1": "./t1.nii.gz",
-    "mask": "./mask.nii.gz"
+    "mask": "./mask.nii.gz",
     "affine": "./affine.txt",
 }
 ```
