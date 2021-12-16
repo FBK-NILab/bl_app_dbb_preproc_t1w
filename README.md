@@ -107,7 +107,7 @@ In the repository is present the folder _data/_ where is stored a reference temp
 
 #### Output
 
-The output of bl_app_dbb_preprocessing_t1w is the preprocessed T1-w i.e. rigidly reoriented to template space and with Bias Field Corrected         
+The output of bl_app_dbb_preprocessing_t1w is the preprocessed T1-w i.e. rigidly reoriented to template space and corrected for bias field
 
 The file is stored in the `--outputdir` folder and has the same *basename* of the input T1-w file with the suffix "_reoriented_N4"
 
