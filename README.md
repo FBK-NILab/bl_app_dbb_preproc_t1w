@@ -5,11 +5,24 @@ This application performs a basic pre-processing of t1-w images:
 1. ACPC alignment
 2. Bias Field Correction
 
-### Authors
+### Author
 
     Gabriele Amorosino (gamorosino@fbk.eu)
+
+### Contributors
+
     Matteo Ballabio (matteoballabio99@gmail.com)
     Paolo Avesani (avesani@fbk.eu)
+    
+### Citation
+
+If you use this code for your research please cite:
+
+```
+Gabriele Amorosino, Denis Peruzzo, Daniela Redaelli, Emanuele Olivetti, Filippo Arrigoni, Paolo Avesani,
+DBB - A Distorted Brain Benchmark for Automatic Tissue Segmentation in Paediatric Patients,
+NeuroImage, 2022, 119486, ISSN 1053-8119, https://doi.org/10.1016/j.neuroimage.2022.119486.
+```
 
 ## Running the Brainlife App
 
@@ -102,7 +115,7 @@ and some optional inputs:
 	                    as the input image
 	-a, --affine        fullpath of affine matrix to perform rigid transformation to the template
 	-m, --mask          full path of the brain mask to limit Bias-field correction on these voxels     
-	-n, --threads      number of threads
+	-n, --threads       number of threads
 	
 Example:
 
