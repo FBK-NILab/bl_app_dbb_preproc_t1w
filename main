@@ -70,12 +70,15 @@ if ( [ -z "${mask}" ]  || [  "${mask}" == "null" ] ); then
 else
 
 	mask_opt=" --mask ${mask} "
+	outputdir_3=${PWD}"/mask_reoriented"
+	mkdir -p ${outputdir_3}
 	
 fi
 
 outputdir_0=${PWD}"/outputdir"
 outputdir_1=${PWD}"/T1_reoriented"
 outputdir_2=${PWD}"/T1_reoriented_N4"
+
 
 template='./data/MNI152_T1_1mm.nii.gz'
 singularity exec -e docker://brainlife/ants:2.2.0.1 bash T1Wbasicpreproc.sh -i $t1 -t ${template} ${affine_opt}  ${mask_opt} --outputdir ${outputdir_0}
@@ -85,8 +88,9 @@ singularity exec -e docker://brainlife/ants:2.2.0.1 bash T1Wbasicpreproc.sh -i $
 mkdir -p ${outputdir_1}
 mkdir -p ${outputdir_2}
 
+
 prefix=$( remove_extx $( basename ${t1} ) )
 
 cp ${outputdir_0}'/'${prefix}"_reoriented.nii.gz"	${outputdir_1}'/t1.nii.gz'
 cp ${outputdir_0}'/'${prefix}"_reoriented_N4.nii.gz"	${outputdir_2}'/t1.nii.gz'
-
+( [ -z "${mask}" ]  || [  "${mask}" == "null" ] ) || {  prefix=$( remove_extx $( basename ${mask} ) ); cp ${outputdir_0}'/'${prefix}'_reoriented.nii.gz' ${outputdir_3}; }
