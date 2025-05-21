@@ -289,6 +289,7 @@ fi
 
 echo "affine:" ${affine}
 ls ${affine}
+[ -f ${affine} ] && { echo "affine exists";} 
 
 [ -d ${outputdir} ] || { mkdir ${outputdir} ; }
 
@@ -302,11 +303,7 @@ if [ $( exists $input_reo ) -eq 0 ]; then
 	if [ $( exists ${affine} ) -eq 0 ]; then
 		echo "No affine matrix provided."
 		echo "Perform ac-pc reorientation to MNI space..."
-  
-		iter=10000x1000x1000
-
-	
-						
+			
 		its=10000x111110x11110
 		percentage=0.3				
 		antsRegistration -d ${dim} -v 1 -r [ ${template} , ${input_}  ,1]  \
