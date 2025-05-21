@@ -57,10 +57,8 @@ if ( [ -z "${affine}" ]  || [  "${affine}" == "null" ] ); then
 	echo "No affine matrix provided. Reorientation to the  MNI152 space will be performed by rigid registration to MNI152 T1-w template..."
 	
 else
-	#affine_mat="${affine}/affine.txt"
-	#affine_opt=" --affine ${affine_mat} "
-	cp  ${affine} ${PWD}"/affine.txt"
-	affine_opt=" --affine ${PWD}/affine.txt"
+
+	affine_opt=" --affine ${affine}
 
 fi
 
