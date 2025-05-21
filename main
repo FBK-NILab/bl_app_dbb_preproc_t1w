@@ -58,7 +58,7 @@ if ( [ -z "${affine}" ]  || [  "${affine}" == "null" ] ); then
 	
 else
 
-	affine_opt=" --affine ${affine}
+	affine_opt=" --affine ${affine}"
 
 fi
 
