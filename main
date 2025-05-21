@@ -81,6 +81,7 @@ outputdir_2=${PWD}"/T1_reoriented_N4"
 
 
 template='./data/MNI152_T1_1mm.nii.gz'
+echo "bash T1Wbasicpreproc.sh -i $t1 -t ${template} ${affine_opt}  ${mask_opt} --outputdir ${outputdir_0}"
 singularity exec -e docker://brainlife/ants:2.2.0.1 bash T1Wbasicpreproc.sh -i $t1 -t ${template} ${affine_opt}  ${mask_opt} --outputdir ${outputdir_0}
 
 # save outputfile 
