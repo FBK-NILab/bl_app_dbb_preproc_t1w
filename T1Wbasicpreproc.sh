@@ -253,8 +253,6 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-
-
 ###################################################################################################################
 ######### 	Set number of threads
 ###################################################################################################################
@@ -289,7 +287,6 @@ if [ -z ${affine} ]; then
 fi
 
 
-
 [ -d ${outputdir} ] || { mkdir ${outputdir} ; }
 
 
@@ -300,11 +297,9 @@ dim=$( imm_dim ${input_} )
 if [ $( exists $input_reo ) -eq 0 ]; then
 
 	if [ $( exists ${affine} ) -eq 0 ]; then
-
-		iter=10000x1000x1000
-
-	
-						
+		echo "No affine matrix provided."
+		echo "Perform ac-pc reorientation to MNI space..."
+			
 		its=10000x111110x11110
 		percentage=0.3				
 		antsRegistration -d ${dim} -v 1 -r [ ${template} , ${input_}  ,1]  \

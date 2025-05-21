@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #PBS -l nodes=1:ppn=1
-#PBS -l walltime=00:05:00
+#PBS -l walltime=00:55:00
 
 
 # functions
@@ -57,9 +57,8 @@ if ( [ -z "${affine}" ]  || [  "${affine}" == "null" ] ); then
 	echo "No affine matrix provided. Reorientation to the  MNI152 space will be performed by rigid registration to MNI152 T1-w template..."
 	
 else
-	#affine_mat="${affine}/affine.txt"
-	#affine_opt=" --affine ${affine_mat} "
-	affine_opt=" --affine ${affine} "
+
+	affine_opt=" --affine ${affine}"
 
 fi
 
@@ -81,6 +80,7 @@ outputdir_2=${PWD}"/T1_reoriented_N4"
 
 
 template='./data/MNI152_T1_1mm.nii.gz'
+echo "bash T1Wbasicpreproc.sh -i $t1 -t ${template} ${affine_opt}  ${mask_opt} --outputdir ${outputdir_0}"
 singularity exec -e docker://brainlife/ants:2.2.0.1 bash T1Wbasicpreproc.sh -i $t1 -t ${template} ${affine_opt}  ${mask_opt} --outputdir ${outputdir_0}
 
 # save outputfile 
@@ -93,4 +93,4 @@ prefix=$( remove_extx $( basename ${t1} ) )
 
 cp ${outputdir_0}'/'${prefix}"_reoriented.nii.gz"	${outputdir_1}'/t1.nii.gz'
 cp ${outputdir_0}'/'${prefix}"_reoriented_N4.nii.gz"	${outputdir_2}'/t1.nii.gz'
-( [ -z "${mask}" ]  || [  "${mask}" == "null" ] ) || {  prefix=$( remove_extx $( basename ${mask} ) ); cp ${outputdir_0}'/'${prefix}'_reoriented.nii.gz' ${outputdir_3}; }
+( [ -z "${mask}" ]  || [  "${mask}" == "null" ] ) || {  prefix=$( remove_extx $( basename ${mask} ) ); cp ${outputdir_0}'/'${prefix}'_reoriented.nii.gz' ${outputdir_3}/$( basename ${mask} ); }
