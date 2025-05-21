@@ -59,7 +59,8 @@ if ( [ -z "${affine}" ]  || [  "${affine}" == "null" ] ); then
 else
 	#affine_mat="${affine}/affine.txt"
 	#affine_opt=" --affine ${affine_mat} "
-	affine_opt=" --affine ${affine} "
+	cp  ${affine} ${PWD}"/affine.txt"
+	affine_opt=" --affine ${PWD}/affine.txt"
 
 fi
 
