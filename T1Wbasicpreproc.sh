@@ -287,11 +287,6 @@ if [ -z ${affine} ]; then
 fi
 
 
-echo "affine:" ${affine}
-affine=$(readlink -f "$affine")
-echo "affine:" ${affine}
-[ -f ${affine} ] && { echo "affine exists";} 
-
 [ -d ${outputdir} ] || { mkdir ${outputdir} ; }
 
 
