@@ -300,7 +300,9 @@ dim=$( imm_dim ${input_} )
 if [ $( exists $input_reo ) -eq 0 ]; then
 
 	if [ $( exists ${affine} ) -eq 0 ]; then
-
+		echo "No affine matrix provided."
+		echo "Perform ac-pc reorientation to MNI space..."
+  
 		iter=10000x1000x1000
 
 	
