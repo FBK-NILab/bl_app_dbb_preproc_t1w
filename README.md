@@ -1,5 +1,39 @@
 # bl_app_dbb_preprocessing_t1w
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Reorients a T1-weighted image to MNI152 (AC-PC) with a given or ANTs-estimated rigid transform and corrects its bias field with N4, as preprocessing for the Distorted Brain Benchmark.**
+
+Applies the given reorientation matrix (or a rigid ANTs registration to the MNI152 1 mm template when none is given) to the T1w and the brain mask, then runs N4 bias field correction restricted to the mask. Use it to prepare T1w images, including paediatric and distorted brains, for tissue segmentation as in the DBB benchmark.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/anat/t1w` · `neuro/mask` · `neuro/transform/nifti` |
+| 📤 **Outputs** | `neuro/anat/t1w` · `neuro/mask` |
+| 🐳 **Container** | `brainlife/ants:2.2.0.1` |
+| ⚙️ **Resources** | 1 CPUs |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.535](https://doi.org/10.25663/brainlife.app.535) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `t1` | `neuro/anat/t1w` | yes | T1-weighted image to preprocess. |
+| `mask` | `neuro/mask` | yes | brain mask |
+| `affine` | `neuro/transform/nifti` | yes | reorientation matrix |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `T1_reoriented_N4` | `neuro/anat/t1w` | T1w reoriented to the MNI152 (AC-PC) orientation and N4 bias-field corrected. |
+| `mask_reoriented` | `neuro/mask` | Brain mask resampled with the same reorientation. |
+
+📚 **References used by this App:**
+- Amorosino G, Peruzzo D, Redaelli D, Olivetti E, Arrigoni F, Avesani P. DBB - A Distorted Brain Benchmark for Automatic Tissue Segmentation in Paediatric Patients. NeuroImage 119486 (2022). [doi:10.1016/j.neuroimage.2022.119486](https://doi.org/10.1016/j.neuroimage.2022.119486)
+
+<!-- brainlife-app:end -->
+
 This application performs a basic pre-processing of t1-w images:
 
 1. ACPC alignment
